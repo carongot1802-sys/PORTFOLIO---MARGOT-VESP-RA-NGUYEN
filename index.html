@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nguyễn Thị Minh Ngọc — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6ea;--ink:#2f3b25;--soft:#5d6b4c;--matcha:#8aa36a;--matcha-d:#5f7a43;--mist:#dfe8c8;--blush:#f2dfe0;--card:rgba(255,255,255,.62);--line:rgba(95,122,67,.22)}
+@media (prefers-color-scheme:dark){:root{--bg:#1d2418;--ink:#eef2dd;--soft:#b6c39b;--matcha:#a5bf80;--matcha-d:#c6dba0;--mist:#2c3a22;--blush:#3a2d33;--card:rgba(40,52,32,.6);--line:rgba(190,215,150,.2)}}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',system-ui,sans-serif;font-weight:300;color:var(--ink);background:var(--bg);line-height:1.75;min-height:100vh;overflow-x:hidden}
+/* dreamy background: drifting blurred blobs (+ optional background photo) */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.bg i{position:absolute;border-radius:50%;filter:blur(80px);opacity:.75;animation:drift 22s ease-in-out infinite alternate}
+.bg i:nth-child(1){width:55vw;height:55vw;background:var(--mist);top:-15vw;left:-10vw}
+.bg i:nth-child(2){width:45vw;height:45vw;background:var(--blush);bottom:-12vw;right:-8vw;animation-delay:-8s}
+.bg i:nth-child(3){width:35vw;height:35vw;background:#c5d9a0;top:40%;left:45%;opacity:.4;animation-delay:-14s}
+.bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;filter:blur(6px)}
+@keyframes drift{to{transform:translate(6vw,4vw) scale(1.12)}}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 22px 70px}
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:500;letter-spacing:.04em;color:var(--matcha-d)}
+.lang{display:flex;gap:4px;padding:4px;border-radius:99px;background:var(--card);border:1px solid var(--line);backdrop-filter:blur(10px)}
+.lang button{border:0;background:none;font:inherit;font-size:.82rem;padding:5px 13px;border-radius:99px;cursor:pointer;color:var(--soft);transition:.3s}
+.lang button.on{background:var(--matcha);color:#fff}
+/* hero */
+.hero{text-align:center;padding:54px 0 30px}
+.hero h1{font-family:'Montserrat',sans-serif;font-weight:300;font-size:clamp(2rem,5.6vw,3.6rem);line-height:1.15;letter-spacing:-.01em}
+.hero p{font-family:'Montserrat',sans-serif;font-style:italic;font-weight:300;font-size:1.05rem;color:var(--soft);margin-top:12px}
+/* tabs */
+nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:26px 0 34px;position:sticky;top:10px;z-index:5}
+nav button{font:inherit;font-size:.88rem;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(10px);color:var(--soft);padding:8px 18px;border-radius:99px;cursor:pointer;transition:all .35s ease}
+nav button:hover{transform:translateY(-2px);color:var(--ink)}
+nav button.on{background:var(--matcha);border-color:var(--matcha);color:#fff;box-shadow:0 8px 22px -8px var(--matcha-d)}
+/* panels with smooth switch */
+.panel{display:none;opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.panel.show{display:block}
+.panel.in{opacity:1;transform:none}
+h2{font-family:'Montserrat',sans-serif;font-weight:500;font-size:1.6rem;margin-bottom:20px;color:var(--matcha-d)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 26px;backdrop-filter:blur(12px);margin-bottom:18px}
+.card h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:500;line-height:1.3}
+.meta{font-size:.82rem;color:var(--matcha-d);margin:2px 0 8px}
+.card p{font-size:.94rem;color:var(--soft)}
+a{color:var(--matcha-d)}
+.btn{display:inline-block;margin-top:10px;font-size:.85rem;padding:6px 16px;border-radius:99px;border:1px solid var(--matcha);text-decoration:none;transition:.3s}
+.btn:hover{background:var(--matcha);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.grid .card{margin:0;padding:0;overflow:hidden;display:flex;flex-direction:column}
+.grid .body{padding:6px 22px 22px}
+/* IMAGE WITH BLURRED/FADED EDGES — blends into the background */
+.fade{-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)}
+.fadeb{-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.thumb{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.ph{display:grid;place-items:center;text-align:center;font-size:.8rem;color:var(--soft);border:1.5px dashed var(--matcha);border-radius:22px;background:rgba(138,163,106,.08);padding:18px}
+.about{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:34px;align-items:center}
+.photo{aspect-ratio:1;width:100%;object-fit:cover}
+.about .txt p{font-size:1.02rem;color:var(--ink);margin-bottom:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.chips span{font-size:.82rem;padding:4px 14px;border-radius:99px;background:var(--mist);color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.deco{position:absolute;right:-30px;top:120px;width:300px;opacity:.55;pointer-events:none;z-index:-1}
+.video{aspect-ratio:16/9;width:100%;border:0;display:block}
+footer{text-align:center;font-size:.8rem;color:var(--soft);margin-top:50px}
+@media(max-width:700px){.about,.two{grid-template-columns:1fr}.deco{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+:focus-visible{outline:2px solid var(--matcha-d);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="bg"><i></i><i></i><i></i><img id="bgimg" alt="" hidden></div>
+<div class="wrap">
+  <div class="top"><span class="brand">M. N. Nguyễn</span><div class="lang" id="lang"></div></div>
+  <header class="hero"><h1>Nguyễn Thị Minh Ngọc</h1><p id="tagline"></p></header>
+  <nav id="nav"></nav>
+  <main id="stage"></main>
+  <footer>© 2026 Nguyễn Thị Minh Ngọc</footer>
+</div>
+
+<script>
+/* =====================================================================
+   1) CONFIG — EDIT HERE. Everything on the page comes from this block.
+   L(vi, en, fr) = text in 3 languages.
+   Images: put a file path ("img/me.jpg") or a URL. Leave "" to show a
+   dashed placeholder.
+   ===================================================================== */
+const L=(vi,en,fr)=>({vi,en,fr});
+
+const CONFIG={
+  bgImage:"",              // optional full-page background photo (softly blurred)
+  decoImage:"",            // optional decorative image on the right edge (faded)
+  photo:"",                // YOUR PORTRAIT for the About section
+  email:"thiminhngocnguyen22@gmail.com",
+  linkedin:"https://www.linkedin.com/in/margot-nguyen-n1802",
+
+  tagline:L("Truyền thông quốc tế · Báo chí · Pháp ngữ","International communication · Journalism · Francophonie","Communication internationale · Journalisme · Francophonie"),
+
+  /* ---- ABOUT: add as many paragraphs as you like ---- */
+  about:[
+    L("Xin chào, mình là Ngọc — sinh viên năm ba ngành Truyền thông quốc tế tại Học viện Ngoại giao Việt Nam. Mình yêu việc kể chuyện bằng chữ, hình ảnh và video, và đặc biệt say mê cầu nối văn hóa Việt – Pháp.",
+      "Hello, I'm Ngoc — a third-year International Communication student at the Diplomatic Academy of Vietnam. I love telling stories through words, images and video, with a special passion for bridging Vietnamese and French culture.",
+      "Bonjour, je suis Ngọc, étudiante en 3e année de Communication internationale à l'Académie diplomatique du Vietnam. J'aime raconter des histoires par les mots, l'image et la vidéo, et jeter des ponts entre les cultures vietnamienne et française."),
+    L("✎ Thêm đoạn giới thiệu của bạn tại đây (mục CONFIG.about).","✎ Add your own introduction here (CONFIG.about).","✎ Ajoutez votre présentation ici (CONFIG.about).")
+  ],
+  skills:[L("Dịch Pháp–Việt","French–Vietnamese translation","Traduction FR–VI"),L("Viết báo","Journalism","Journalisme"),L("Dựng video","Video editing","Montage vidéo"),L("Kế hoạch truyền thông","Communication planning","Plan de communication"),L("Nghiên cứu & kiểm chứng","Research & fact-checking","Recherche & vérification")],
+  education:[
+    {t:L("Cử nhân Truyền thông quốc tế","BA in International Communication","Licence en Communication internationale"),o:L("Học viện Ngoại giao Việt Nam","Diplomatic Academy of Vietnam","Académie diplomatique du Vietnam"),p:"2023 – 2027 · GPA 3.54"},
+    {t:L("Tú tài — Lớp chuyên Pháp","Baccalauréat — French specialised class","Baccalauréat — classe spécialisée de français"),o:L("THPT Chuyên Trần Phú, Hải Phòng","Tran Phu High School for the Gifted, Hai Phong","Lycée Trần Phú, Hải Phòng"),p:"2020 – 2023"}
+  ],
+  languages:[L("Tiếng Pháp B2","French B2","Français B2"),L("Tiếng Anh B2","English B2","Anglais B2"),L("Tiếng Việt — bản ngữ","Vietnamese — native","Vietnamien — langue maternelle")],
+
+  /* ---- EXPERIENCE ---- */
+  experience:[
+    {role:L("Thực tập sinh nghiên cứu & dịch tin tức","Research & news translation intern","Stagiaire recherche & traduction de l'actualité"),
+     org:L("Đại sứ quán Việt Nam tại Algeria","Embassy of Vietnam in Algeria","Ambassade du Vietnam en Algérie"),period:"06/2026 – 11/2026",
+     desc:L("Dịch Pháp–Việt và biên soạn bản tin tổng hợp về các vấn đề thể chế, ngoại giao; nghiên cứu, kiểm chứng thông tin từ nguồn tiếng Pháp và tiếng Việt; xây dựng kế hoạch truyền thông cho sự kiện Quốc khánh 02/09 với sự tham dự của kiều bào, chính quyền sở tại và Ngoại giao đoàn. Hơn 70 tinA (bản tin nội bộ của Bộ Ngoại giao).",
+            "French–Vietnamese translation and news digests on institutional and diplomatic affairs; research and fact-checking from French and Vietnamese sources; drafted the communication plan for the 2 September National Day event, attended by the Vietnamese community, local authorities and the diplomatic corps. 70+ tinA pieces (the Ministry of Foreign Affairs' internal bulletin).",
+            "Traduction français–vietnamien et revues de presse sur les questions institutionnelles et diplomatiques ; recherche et vérification d'informations ; plan de communication de la Fête nationale du 2 septembre, en présence de la communauté vietnamienne, des autorités locales et du corps diplomatique. Plus de 70 articles tinA (bulletin interne du ministère des Affaires étrangères)."),
+     link:"https://www.facebook.com/share/p/1DCMs7HkJp/",img:""},
+    {role:L("Thực tập sinh nghiên cứu & truyền thông","Research & communication intern","Stagiaire recherche & communication"),
+     org:L("Keep Vietnam Clean (KVC)","Keep Vietnam Clean (KVC)","Keep Vietnam Clean (KVC)"),period:"03/2026 – 07/2026",
+     desc:L("Nghiên cứu thông tin và biên soạn nội dung giáo dục về các vấn đề môi trường; khoảng 20 bài đăng.","Researched and wrote educational content on environmental issues; around 20 posts.","Recherche et rédaction de contenus éducatifs sur les enjeux environnementaux ; une vingtaine de publications."),link:"",img:""},
+    {role:L("Thực tập sinh Phòng Truyền thông","Communication department intern","Stagiaire au service communication"),
+     org:L("Bảo tàng Hà Nội","Hanoi Museum","Musée de Hanoï"),period:"03/2025 – 07/2025",
+     desc:L("Cùng đội nhóm xây dựng kế hoạch truyền thông cho kênh TikTok của Bảo tàng; thực hiện khoảng 10 video.","Built, with a team, the communication plan for the Museum's TikTok channel; produced around 10 videos.","Élaboration, en équipe, du plan de communication du compte TikTok du musée ; réalisation d'une dizaine de vidéos."),link:"",img:""},
+    {role:L("Cộng tác viên biên tập","Editorial contributor","Collaboratrice éditoriale"),
+     org:L("Báo Tiền Phong — Chuyên trang Sinh viên Việt Nam","Tien Phong Newspaper — Vietnamese Students section","Journal Tiền Phong — rubrique Étudiants vietnamiens"),period:"04/2024 – 08/2025",
+     desc:L("Nghiên cứu tài liệu, phỏng vấn và viết bài về văn hóa, di sản và giới trẻ; khoảng 10 bài báo; có kinh nghiệm chạy sự kiện thực chiến cho báo.","Researched, interviewed and wrote on culture, heritage and youth; around 10 articles; hands-on experience covering live events for the paper.","Recherche, entretiens et articles sur la culture, le patrimoine et la jeunesse ; une dizaine d'articles ; expérience de terrain lors d'événements pour le journal."),link:"",img:""}
+  ],
+
+  /* ---- ARTICLES: add {title, url, img, src} ---- */
+  articles:[
+    {title:"Nữ sinh thủ khoa kỳ thi học sinh giỏi quốc gia: Em muốn làm một đóa hướng dương rực rỡ",url:"https://svvn.tienphong.vn/nu-sinh-thu-khoa-ky-thi-hoc-sinh-gioi-quoc-gia-em-muon-lam-mot-doa-huong-duong-ruc-ro-post1651889.tpo",img:"",src:"Tiền Phong"},
+    {title:"Ba bước thoát an toàn của nữ sinh Học viện Ngoại giao",url:"https://svvn.tienphong.vn/ba-buoc-thoat-an-toan-cua-nu-sinh-hoc-vien-ngoai-giao-post1652215.tpo",img:"",src:"Tiền Phong"},
+    {title:"Khát khao cống hiến cho ngành Luật Việt Nam của nam sinh chuyên Sử",url:"https://svvn.tienphong.vn/khat-khao-cong-hien-cho-nganh-luat-viet-nam-cua-nam-sinh-chuyen-su-post1654881.tpo",img:"",src:"Tiền Phong"},
+    {title:"Ước mơ trở thành người ươm mầm tình yêu của mình với Toán là đường vô cực",url:"https://svvn.tienphong.vn/uoc-mo-tro-thanh-nguoi-uom-mam-tinh-yeu-cua-minh-voi-toan-la-duong-vo-cuc-post1658833.tpo",img:"",src:"Tiền Phong"},
+    {title:"Người trẻ học âm nhạc cổ điển",url:"https://svvn.tienphong.vn/nguoi-tre-hoc-am-nhac-co-dien-post1666120.tpo",img:"",src:"Tiền Phong"},
+    {title:"Kỳ thực tập mùa hè đáng nhớ của những nhà báo năm nhất đến từ Học viện Ngoại giao",url:"https://svvn.tienphong.vn/ky-thuc-tap-mua-he-dang-nho-cua-nhung-nha-bao-nam-nhat-den-tu-hoc-vien-ngoai-giao-post1666767.tpo",img:"",src:"Tiền Phong"},
+    {title:"Ngành Quản trị khách sạn từ góc nhìn của một sinh viên năm cuối",url:"https://svvn.tienphong.vn/nganh-hoc-quan-tri-khach-san-tu-goc-nhin-cua-mot-sinh-vien-nam-cuoi-post1664870.tpo",img:"",src:"Tiền Phong"},
+    {title:"Top 3 địa điểm check-in đẹp quên lối về tại Hải Phòng cho giới trẻ",url:"https://svvn.tienphong.vn/luu-ngay-top-3-dia-diem-check-in-dep-quen-loi-ve-tai-hai-phong-cho-gioi-tre-trong-nhung-ngay-le-post1669287.tpo",img:"",src:"Tiền Phong"},
+    {title:"Tuổi trẻ với lý tưởng phụng công thủ pháp, chí công vô tư",url:"https://svvn.tienphong.vn/tuoi-tre-voi-ly-tuong-phung-cong-thu-phap-chi-cong-vo-tu-post1676261.tpo",img:"",src:"Tiền Phong"},
+    {title:"Dưới góc nhìn của sinh viên ngành Tiếng Anh thương mại: học ngôn ngữ hay thương mại?",url:"https://svvn.tienphong.vn/duoi-goc-nhin-cua-sinh-vien-nganh-tieng-anh-thuong-mai-hoc-ngon-ngu-hay-thuong-mai-post1680099.tpo",img:"",src:"Tiền Phong"}
+  ],
+
+  /* ---- VIDEOS: add {title, url, img}. YouTube links are embedded;
+          Facebook/TikTok/others become a card that opens the link. ---- */
+  videos:[
+    // {title:L("Tên video","Video title","Titre de la vidéo"), url:"https://www.youtube.com/watch?v=XXXX", img:""},
+  ],
+
+  /* ---- PROJECTS ---- */
+  projects:[
+    {t:"Full of Wonders",role:L("Thành viên nhóm truyền thông sáng lập kênh TikTok","Founding communication team member, TikTok channel","Membre fondatrice de l'équipe de communication, chaîne TikTok"),p:"2024 – 2025",
+     d:L("Xây dựng nội dung, quay chụp, dựng video cho dự án gắn hình ảnh bánh mì với thương hiệu quốc gia: 45 video, gần 9 nghìn lượt thích.","Content, filming and editing for a project linking the image of bánh mì to Vietnam's national brand: 45 videos, nearly 9,000 likes.","Contenu, tournage et montage pour un projet associant le bánh mì à l'image de marque du Vietnam : 45 vidéos, près de 9 000 j'aime."),link:"",img:""},
+    {t:L("CLB Guitar Học viện Ngoại giao","DAV Guitar Club","Club de guitare de l'Académie diplomatique"),role:L("Thành viên Ban Truyền thông","Communication team member","Membre du pôle communication"),p:"09/2024 – 09/2025",
+     d:L("Đồng sáng tạo concept concert “Trống Nổi Đổi Trời 2025”; xây dựng nội dung truyền thông trên Facebook và nội dung in merchandise sự kiện.","Co-created the concept of the concert “Trống Nổi Đổi Trời 2025”; produced Facebook content and merchandise designs for the event.","Co-création du concept du concert « Trống Nổi Đổi Trời 2025 » ; contenus Facebook et visuels de produits dérivés."),link:"",img:""},
+    {t:L("CLB Pháp ngữ Học viện Ngoại giao","DAV Francophone Club","Club francophone de l'Académie diplomatique"),role:L("Thành viên Ban Truyền thông","Communication team member","Membre du pôle communication"),p:"09/2023 – 09/2025",d:L("","",""),link:"",img:""},
+    {t:"Francify",role:L("Thành viên Ban Truyền thông — THPT Năng khiếu ĐHQG-HCM","Communication team member — VNU-HCM High School for the Gifted","Membre du pôle communication — lycée des talents de l'UNV-HCM"),p:"09/2023 – 09/2025",
+     d:L("Hỗ trợ truyền thông các nội dung về văn hóa, ẩm thực, thời trang Pháp.","Supported communication on French culture, cuisine and fashion.","Appui à la communication sur la culture, la gastronomie et la mode françaises."),link:"",img:""},
+    {t:"Vạn Niên Hoa",role:L("Trưởng ban Chuyên môn & thành viên Ban Truyền thông — THPT Chuyên Trần Phú","Head of Content & communication member — Tran Phu High School","Responsable du contenu & membre du pôle communication — lycée Trần Phú"),p:"2021 – 2023",
+     d:L("Bộ ảnh “Tân Niên Kim Cổ” (Tết 2022); mini-project “Danh hoa Việt nữ” tôn vinh các nữ anh hùng dân tộc; series “Dèng kể bạn nghe” về truyền thuyết Việt, hơn 1000 lượt tương tác.","Photo series “Tân Niên Kim Cổ” (Lunar New Year 2022); mini-project “Danh hoa Việt nữ” honouring national heroines; series “Dèng kể bạn nghe” on Vietnamese legends, 1,000+ interactions.","Série photo « Tân Niên Kim Cổ » (Têt 2022) ; mini-projet « Danh hoa Việt nữ » en hommage aux héroïnes nationales ; série « Dèng kể bạn nghe » sur les légendes vietnamiennes, plus de 1 000 interactions."),link:"",img:""}
+  ],
+
+  /* ---- AWARDS ---- */
+  awards:[
+    {t:L("Top 20 chung cuộc — Phóng viên trẻ Pháp ngữ 2026","Top 20 finalist — Young Francophone Reporters 2026","Top 20 — Jeunes reporters francophones 2026"),n:L("Chưa diễn ra chung kết · Video báo chí « La jeunesse est l'avenir » — Le Courrier du Vietnam","Final round pending · News video « La jeunesse est l'avenir » — Le Courrier du Vietnam","Finale à venir · Vidéo « La jeunesse est l'avenir » — Le Courrier du Vietnam"),url:""},
+    {t:L("Giải khuyến khích — Phóng viên trẻ Pháp ngữ 2025","Encouragement prize — Young Francophone Reporters 2025","Prix d'encouragement — Jeunes reporters francophones 2025"),n:L("Bài báo « Nous nous éduquons, donc nous préservons : la jeunesse au service d'un patrimoine vivant » — Le Courrier du Vietnam","Article « Nous nous éduquons, donc nous préservons… » — Le Courrier du Vietnam","Article « Nous nous éduquons, donc nous préservons : la jeunesse au service d'un patrimoine vivant » — Le Courrier du Vietnam"),url:""},
+    {t:L("Giải thưởng của Đại sứ quán Romania — Phóng viên trẻ Pháp ngữ 2023","Embassy of Romania Prize — Young Francophone Reporters 2023","Prix de l'ambassade de Roumanie — Jeunes reporters francophones 2023"),n:L("Bài báo « Comment la gastronomie francophone exprime l'excellence sur la table de la culture » — Le Courrier du Vietnam","Article « Comment la gastronomie francophone exprime l'excellence sur la table de la culture » — Le Courrier du Vietnam","Article « Comment la gastronomie francophone exprime l'excellence sur la table de la culture » — Le Courrier du Vietnam"),url:""}
+  ]
+};
+
+/* UI labels */
+const UI={
+  tabs:{about:L("Giới thiệu","About","À propos"),experience:L("Kinh nghiệm","Experience","Expérience"),articles:L("Bài báo","Articles","Articles"),videos:L("Video","Videos","Vidéos"),projects:L("Dự án","Projects","Projets"),awards:L("Giải thưởng","Awards","Distinctions"),contact:L("Liên hệ","Contact","Contact")},
+  edu:L("Học vấn","Education","Formation"),lang:L("Ngôn ngữ","Languages","Langues"),skills:L("Kỹ năng","Skills","Compétences"),
+  read:L("Đọc bài","Read article","Lire l'article"),watch:L("Xem video","Watch video","Voir la vidéo"),view:L("Xem thêm","View","Voir"),
+  addPhoto:L("Thêm ảnh chân dung\n(CONFIG.photo)","Add your portrait\n(CONFIG.photo)","Ajoutez votre portrait\n(CONFIG.photo)"),
+  addVideo:L("Chưa có video — thêm vào CONFIG.videos","No videos yet — add them in CONFIG.videos","Pas encore de vidéo — ajoutez-les dans CONFIG.videos"),
+  contactTxt:L("Rất vui được kết nối và trao đổi cùng bạn.","I'd love to connect and talk with you.","Au plaisir d'échanger avec vous.")
+};
+
+/* =====================================================================
+   2) ENGINE — no need to edit below
+   ===================================================================== */
+let lang="vi",tab="about";
+try{lang=localStorage.getItem("lang")||"vi"}catch(e){}
+const $=s=>document.querySelector(s), tx=o=>(o&&o[lang])||"";
+const img=(src,cls,alt="")=>src?`<img class="${cls}" src="${src}" alt="${alt}" loading="lazy">`:"";
+const ph=(txt,cls="")=>`<div class="ph ${cls}" style="white-space:pre-line">${txt}</div>`;
+
+function ytEmbed(u){const m=u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);return m?`https://www.youtube.com/embed/${m[1]}`:""}
+
+const R={
+ about:()=>`<div class="about">
+   ${CONFIG.photo?img(CONFIG.photo,"photo fade","Portrait"):ph(tx(UI.addPhoto),"photo fade")}
+   <div class="txt"><h2>${tx(UI.tabs.about)}</h2>${CONFIG.about.map(p=>`<p>${tx(p)}</p>`).join("")}
+   <h3 class="meta" style="margin-top:14px">${tx(UI.skills)}</h3><div class="chips">${CONFIG.skills.map(s=>`<span>${tx(s)}</span>`).join("")}</div></div></div>
+  <div class="two"><div><h2>${tx(UI.edu)}</h2>${CONFIG.education.map(e=>`<div class="card"><h3>${tx(e.t)}</h3><div class="meta">${tx(e.o)} · ${e.p}</div></div>`).join("")}</div>
+  <div><h2>${tx(UI.lang)}</h2><div class="card"><div class="chips">${CONFIG.languages.map(s=>`<span>${tx(s)}</span>`).join("")}</div></div></div></div>`,
+ experience:()=>`<h2>${tx(UI.tabs.experience)}</h2>`+CONFIG.experience.map(e=>`<div class="card">${img(e.img,"thumb fadeb")}<h3>${tx(e.role)}</h3><div class="meta">${tx(e.org)} · ${e.period}</div><p>${tx(e.desc)}</p>${e.link?`<a class="btn" href="${e.link}" target="_blank" rel="noopener">${tx(UI.view)}</a>`:""}</div>`).join(""),
+ articles:()=>`<h2>${tx(UI.tabs.articles)}</h2><div class="grid">`+CONFIG.articles.map(a=>`<div class="card">${a.img?img(a.img,"thumb fadeb"):""}<div class="body" ${a.img?"":'style="padding-top:22px"'}><div class="meta">${a.src||""}</div><h3>${a.title}</h3><a class="btn" href="${a.url}" target="_blank" rel="noopener">${tx(UI.read)}</a></div></div>`).join("")+`</div>`,
+ videos:()=>`<h2>${tx(UI.tabs.videos)}</h2>`+(CONFIG.videos.length?`<div class="grid">`+CONFIG.videos.map(v=>{const e=ytEmbed(v.url);return `<div class="card">${e?`<iframe class="video" src="${e}" allowfullscreen loading="lazy" title="video"></iframe>`:img(v.img,"thumb fadeb")}<div class="body"><h3>${tx(v.title)}</h3>${e?"":`<a class="btn" href="${v.url}" target="_blank" rel="noopener">${tx(UI.watch)}</a>`}</div></div>`}).join("")+`</div>`:ph(tx(UI.addVideo))),
+ projects:()=>`<h2>${tx(UI.tabs.projects)}</h2>`+CONFIG.projects.map(p=>`<div class="card">${img(p.img,"thumb fadeb")}<h3>${tx(typeof p.t==="string"?{[lang]:p.t}:p.t)}</h3><div class="meta">${tx(p.role)} · ${p.p}</div><p>${tx(p.d)}</p>${p.link?`<a class="btn" href="${p.link}" target="_blank" rel="noopener">${tx(UI.view)}</a>`:""}</div>`).join(""),
+ awards:()=>`<h2>${tx(UI.tabs.awards)}</h2>`+CONFIG.awards.map(a=>`<div class="card"><h3>${tx(a.t)}</h3><p>${tx(a.n)}</p>${a.url?`<a class="btn" href="${a.url}" target="_blank" rel="noopener">${tx(UI.view)}</a>`:""}</div>`).join(""),
+ contact:()=>`<h2>${tx(UI.tabs.contact)}</h2><div class="card"><p style="font-size:1.05rem;color:var(--ink)">${tx(UI.contactTxt)}</p><a class="btn" href="mailto:${CONFIG.email}">${CONFIG.email}</a> <a class="btn" href="${CONFIG.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div>`
+};
+
+function build(){
+  document.documentElement.lang=lang;
+  $("#tagline").textContent=tx(CONFIG.tagline);
+  $("#lang").innerHTML=["vi","en","fr"].map(l=>`<button class="${l===lang?"on":""}" data-l="${l}">${l.toUpperCase()}</button>`).join("");
+  $("#nav").innerHTML=Object.keys(R).map(k=>`<button class="${k===tab?"on":""}" data-t="${k}">${tx(UI.tabs[k])}</button>`).join("");
+  $("#stage").innerHTML=Object.keys(R).map(k=>`<section class="panel ${k===tab?"show in":""}" id="p-${k}">${R[k]()}</section>`).join("");
+  const bg=$("#bgimg");if(CONFIG.bgImage){bg.src=CONFIG.bgImage;bg.hidden=false}
+  if(CONFIG.decoImage&&!$(".deco")){document.body.insertAdjacentHTML("afterbegin",`<img class="deco fade" src="${CONFIG.decoImage}" alt="">`)}
+}
+function go(k){
+  if(k===tab)return;
+  const cur=$("#p-"+tab),nx=$("#p-"+k);tab=k;
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===k));
+  cur.classList.remove("in");
+  setTimeout(()=>{cur.classList.remove("show");nx.classList.add("show");requestAnimationFrame(()=>requestAnimationFrame(()=>nx.classList.add("in")))},320);
+}
+document.addEventListener("click",e=>{
+  const l=e.target.closest("[data-l]"),t=e.target.closest("[data-t]");
+  if(l){lang=l.dataset.l;try{localStorage.setItem("lang",lang)}catch(x){}build()}
+  if(t)go(t.dataset.t);
+});
+build();
+</script>
+</body>
+</html>
